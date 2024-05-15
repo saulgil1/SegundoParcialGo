@@ -4,21 +4,19 @@ import (
 	"bufio"
 	"fmt"
 	"log"
-	"math"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/saulgil1/SegundoParcialGo/TSP"
 )
 
+/*
 type Point struct {
 	X float64
 	Y float64
 }
-
-func EuclideanDistance(p1, p2 Point) int {
-	distancia := int(math.Sqrt((((p2.X - p1.X) * (p2.X - p1.X)) + ((p2.Y - p1.Y) * (p2.Y - p1.Y)))))
-	return distancia
-}
+*/
 
 func main() {
 	// Abrir el archivo .tsp
@@ -32,7 +30,7 @@ func main() {
 	encontrado := false
 
 	// Lista para almacenar los puntos
-	var puntos []Point
+	var puntos []TSP.Point
 
 	// Escanear el archivo línea por línea
 	scanner := bufio.NewScanner(file)
@@ -55,7 +53,7 @@ func main() {
 				log.Fatal(err)
 			}
 			// Crear un punto y agregarlo a la lista de puntos
-			puntos = append(puntos, Point{X: x, Y: y})
+			puntos = append(puntos, TSP.Point{X: x, Y: y})
 		}
 
 		// Buscar la línea que indica el comienzo de la sección NODE_COORD_SECTION
@@ -71,9 +69,8 @@ func main() {
 	}
 
 	// Calcular la distancia entre dos puntos específicos (por ejemplo, punto 7 y punto 4)
-	punto3 := puntos[2] // punto 3
-	punto7 := puntos[6] // punto 7
-
-	distancia := EuclideanDistance(punto3, punto7)
-	fmt.Print("La distancia entre el punto 3 y el punto 7 es:", distancia)
+	vecino := TSP.RecorridoVecinoMasCercano(puntos)
+	for i := 0; i < len(vecino)-1; i++ {
+		fmt.Println(TSP.EuclideanDistance(vecino[i], vecino[i+1]))
+	}
 }
