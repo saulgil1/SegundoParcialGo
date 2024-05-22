@@ -27,7 +27,7 @@ func RecorridoVecinoMasCercano(puntos []Point) []Point {
 	puntosRestantes := make([]Point, len(puntos))
 	copy(puntosRestantes, puntos)
 
-	puntoActual := puntos[0] // Puedes elegir cualquier punto de inicio
+	puntoActual := puntos[0] // Puedes elegir cualquier punto de inicial
 	recorrido = append(recorrido, puntoActual)
 
 	// Eliminar el punto de inicio de puntosRestantes
@@ -46,6 +46,15 @@ func RecorridoVecinoMasCercano(puntos []Point) []Point {
 			}
 		}
 	}
-
 	return recorrido
+}
+
+func CalcularDistancia(vecino []Point, puntos []Point) int {
+	sum := 0
+	for i := 0; i < len(vecino)-1; i++ {
+		sum += EuclideanDistance(vecino[i], vecino[i+1])
+	}
+	sum += EuclideanDistance(puntos[0], vecino[len(vecino)-1])
+
+	return sum
 }
